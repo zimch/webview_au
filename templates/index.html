@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Dragon Curve</title>
+</head>
+<body>
+    <h1>Dragon Curve</h1>
+    
+    <form id="dragonForm">
+        <label for="nInput">Enter the value of n:</label>
+        <input type="number" id="nInput" name="n" min="1" value="14">
+        <input type="submit" value="Draw Dragon">
+    </form>
+    
+    <div id="dragonImage"></div>
+    
+    <script>
+        document.getElementById('dragonForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            let n = document.getElementById('nInput').value;
+            drawDragon(n);
+        });
+
+        function drawDragon(n) {
+            fetch('/fractal?n=' + n)
+                .then(response => response.blob())
+                .then(blob => {
+                    const imgUrl = URL.createObjectURL(blob);
+                    const img = document.createElement('img');
+                    img.src = imgUrl;
+                    document.getElementById('dragonImage').innerHTML = '';
+                    document.getElementById('dragonImage').appendChild(img);
+                });
+        }
+    </script>
+</body>
+
+</html>
