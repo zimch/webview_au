@@ -1,11 +1,12 @@
 from flask import Flask, render_template, send_file, request
-from PyQt5.QtCore import Qt, QUrl
-from PyQt5.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
-from PyQt5.QtWebEngineWidgets import QWebEngineView
+from PyQt6.QtCore import Qt, QUrl
+from PyQt6.QtWidgets import QApplication, QMainWindow, QVBoxLayout, QWidget
+from PyQt6.QtWebEngineWidgets import QWebEngineView
 from sys import argv
 from PIL import Image, ImageDraw
 import io
 import math
+from threading import Thread
 
 app = Flask(__name__)
 
@@ -73,11 +74,10 @@ class WebViewApp(QMainWindow):
         layout.addWidget(self.webview)
 
 if __name__ == '__main__':
-    from threading import Thread
     Thread(target=app.run, kwargs={'host': '0.0.0.0'}).start()
 
     qt_app = QApplication(argv)
     main_window = WebViewApp()
     main_window.webview.setUrl(QUrl('http://127.0.0.1:5000'))
     main_window.show()
-    qt_app.exec_()
+    qt_app.exec()
